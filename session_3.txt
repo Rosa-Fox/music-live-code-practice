@@ -1,0 +1,25 @@
+use_synth :sine
+
+live_loop :bumblebee do
+  play 50, amp: 0.5, attack: 0.1, release: 0.5, cutoff: rrand(50, 120)
+  sleep 0.16
+end
+
+live_loop :randomm do
+  play 69, amp: 0.1, release: 2
+  play 73, amp: 0.3, release: 2 if one_in(2)
+  sample :loop_compus, rate: 0.5, amp: rrand(0.2, 0.4), beat_stretch: 2 if one_in(2)
+  play 79, amp: 0.2, release: 2 if one_in(3)
+  play 64, amp: 0.9, release: 2 if one_in(4)
+  sleep 1.5
+end
+
+live_loop :choosey do
+  use_synth :pretty_bell
+  with_fx :echo do
+    #with_fx :slicer do
+      play choose(60..72), amp: 0.4
+      sleep rrand(3, 7)
+    #end
+  end
+end
