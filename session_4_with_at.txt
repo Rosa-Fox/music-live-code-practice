@@ -1,0 +1,51 @@
+at 1 do
+  loop do
+    use_synth :mod_sine
+    with_fx :reverb do
+      with_fx(:echo, attack: 1, release: 0.5) do
+        with_fx :wobble, amp: 0.5, sustain: 2 do
+          loop do
+            play chord([:b1, :b2, :e1, :e2, :b3, :e3].choose, :minor).choose, cutoff: rrand(40, 60), amp: 0.5, attack: 1
+            sleep [0.25, 0.5, 2].choose
+          end
+        end
+      end
+    end
+  end
+end
+
+at [0, 2] do
+  loop do
+    sample :loop_breakbeat, beat_stretch: 2, release: 0.8
+    sample :elec_hollow_kick, pan: rrand(-1, 1), amp: 1.5
+    sleep 2
+    if one_in(2)
+      with_fx :slicer, pan: rrand(-1, 1) do
+        sample :ambi_glass_hum, rate: rand(1..1.5), pan: rrand(-1, 1), amp: 0.5
+      end
+      sleep 2
+    end
+  end
+end
+
+at 0 do
+  loop do
+    with_synth :dark_ambience do
+      play 60, amp: 0.5, pitch: rrand(1, 4)
+      sleep 0.5
+      play 62, amp: 0.5
+      sleep 1
+      play 64, amp: 0.7
+    end
+  end
+end
+
+at 2 do
+  notes = (ring 42, 52, 44, 50, 45, 47)
+  loop do
+    play notes.choose, amp: 0.5
+    use_transpose 1
+    sleep 1
+    play_chord [40, 45, 47]
+  end
+end
