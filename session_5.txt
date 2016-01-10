@@ -1,0 +1,98 @@
+at 0 do
+  loop do
+    sample :elec_cymbal, release: 0.5, rate: 2
+    sleep 0.5
+  end
+end
+
+at 0 do
+  loop do
+    sample :bass_thick_c, release: 2
+    sleep 4
+  end
+end
+
+at 1 do
+  loop do
+    sample :elec_snare, release: 0.5
+    sleep 2
+  end
+end
+
+at 8 do
+  loop do
+    sample :bass_dnb_f, beat_stretch: 1
+    sleep 4
+  end
+end
+
+at [10, 16, 20], [60, 62, 64] do |n|
+  use_synth :cnoise
+  play n, amp: rand(0.75..1.25)
+end
+
+at 12 do
+  loop do
+    sample :drum_cymbal_open
+    sleep 2
+  end
+end
+
+at [14, 14.5, 16] do |t, idx|
+  loop do
+    use_synth :dull_bell
+    play 60 + idx, amp: rand(0.3..1)
+    sleep 4
+  end
+end
+
+at [16, 17, 17.5], [40, 46, 48] do |t, b|
+  loop do
+    use_synth :mod_fm
+    play b
+    sleep 4
+  end
+end
+
+at 16 do
+  loop do
+    with_fx :echo do
+      sample :guit_e_fifths, pan: rrand(-1, 1), pitch: 2, env_curve: 3, rate: rrand(-1, 1)
+      sleep 1
+    end
+  end
+end
+
+at [20, 24, 25], [40, 46, 48] do |t, b|
+  loop do
+    with_fx :pan do
+      use_synth :mod_tri
+      play b
+      sleep 2
+    end
+  end
+end
+
+pitchz = [1, 2, 3].choose
+at [25, 30, 32],[{:amp => 0.25},
+{:pitch => pitchz,:amp => 1}] do |p|
+  loop do
+    with_fx :flanger do
+      with_fx :lpf do
+        sample :perc_bell, p
+        sleep rand(2..4)
+      end
+    end
+  end
+end
+
+at 35 do
+  loop do
+    with_fx :pitch_shift do
+      with_fx :panslicer do
+        sample :guit_em9, rate: -1, pan: rrand(-0.2, 0.2), amp:  0.7
+        sleep 2
+      end
+    end
+  end
+end
